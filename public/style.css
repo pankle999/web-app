@@ -4,7 +4,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
+  margin: 0;
 }
 
 .login-container, .dashboard-container {
@@ -12,6 +13,8 @@ body {
   padding: 20px 30px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  max-width: 400px;
+  width: 100%;
 }
 
 input {
@@ -19,6 +22,7 @@ input {
   margin: 10px 0;
   padding: 8px;
   width: 100%;
+  box-sizing: border-box;
 }
 
 button {
@@ -28,20 +32,23 @@ button {
   color: white;
   border: none;
   border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
 }
 
 .error {
   color: red;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
+ul {
+  list-style-type: none;
+  padding-left: 0;
 }
 
-th, td {
-  padding: 8px;
-  border: 1px solid #ddd;
-  text-align: center;
+li {
+  padding: 5px 0;
+  border-bottom: 1px solid #ddd;
 }
