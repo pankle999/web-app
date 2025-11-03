@@ -27,7 +27,7 @@ let lastFetchError = null;
 // Function to fetch dashboard data from Google Apps Script
 async function fetchDashboardData() {
   try {
-    const response = await axios.get("YOUR_GAS_WEB_APP_URL"); // replace with your URL
+    const response = await axios.get("https://script.google.com/macros/s/AKfycby4iPMRqXPM2gjbfTCjCs59FjZZNlGRemi61_-1HcO1X-x05qIaeU4PS0urERjQRNDv/exec"); // replace with your URL
     const { dashboard = [] } = response.data || {};
     cachedDashboard = dashboard;
     lastFetchError = null;
