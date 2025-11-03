@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="dashboard-container">
+    <h2>Updates</h2>
+    <a href="/logout">Logout</a>
+    <% if (updates.length === 0) { %>
+      <p>No updates available.</p>
+    <% } else { %>
+      <table>
+        <tr>
+          <th>Row</th>
+          <th>New Bank Value</th>
+        </tr>
+        <% updates.forEach(update => { %>
+          <tr>
+            <td><%= update.row %></td>
+            <td><%= update.newBank %></td>
+          </tr>
+        <% }) %>
+      </table>
+    <% } %>
+  </div>
+</body>
+</html>
