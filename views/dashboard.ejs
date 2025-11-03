@@ -8,7 +8,7 @@
 <body>
   <div class="dashboard-container">
     <h2>Weekly Updates (Processed)</h2>
-    <% if (updates.length === 0) { %>
+    <% if (!updates || updates.length === 0) { %>
       <p>No weekly updates available.</p>
     <% } else { %>
       <ul>
@@ -19,7 +19,7 @@
     <% } %>
 
     <h2>Dashboard Data (A:I)</h2>
-    <% if (dashboard.length === 0) { %>
+    <% if (!dashboard || dashboard.length === 0) { %>
       <p>No dashboard data available.</p>
     <% } else { %>
       <ul>
