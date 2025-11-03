@@ -19,6 +19,14 @@ app.use(session({
   saveUninitialized: false
 }));
 
+try {
+    const response = await axios.get("https://script.google.com/macros/s/AKfycby4iPMRqXPM2gjbfTCjCs59FjZZNlGRemi61_-1HcO1X-x05qIaeU4PS0urERjQRNDv/exec");
+    console.log(response.data);
+} catch (err) {
+    console.error("Failed to fetch data:", err.message);
+}
+
+
 // Login page
 app.get("/", (req, res) => {
   if (req.session.loggedIn) return res.redirect("/dashboard");
