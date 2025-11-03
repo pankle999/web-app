@@ -40,7 +40,7 @@ app.get("/dashboard", async (req, res) => {
   if (!req.session.loggedIn) return res.redirect("/");
 
   try {
-    const response = await axios.get("YOUR_GAS_WEB_APP_URL");
+    const response = await axios.get("https://script.google.com/macros/s/AKfycby4iPMRqXPM2gjbfTCjCs59FjZZNlGRemi61_-1HcO1X-x05qIaeU4PS0urERjQRNDv/exec");
     const { updates, dashboard } = response.data || { updates: [], dashboard: [] };
 
     res.render("dashboard", { updates, dashboard });
