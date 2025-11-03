@@ -43,7 +43,7 @@ app.get("/dashboard", async (req, res) => {
 
   try {
     // Replace this URL with your Google Apps Script web app URL
-    const response = await axios.get("YOUR_GAS_WEB_APP_URL"); 
+    const response = await axios.get("https://script.google.com/macros/s/AKfycby4iPMRqXPM2gjbfTCjCs59FjZZNlGRemi61_-1HcO1X-x05qIaeU4PS0urERjQRNDv/exec"); 
     const updates = response.data.updates || [];
 
     res.render("dashboard", { updates });
