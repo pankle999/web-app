@@ -20,6 +20,30 @@ app.use(session({
   saveUninitialized: false
 }));
 
+// Server-side cache for dashboard data
+let cachedDashboard = [];
+let lastFetchError = null;
+
+// Function to fetch dashboard data from Google Apps Script
+async function fetchDashboardData() {
+  try {
+    const response = await axios.get("YOUR_GAS_WEB_APP_URL"); // replace with your URL
+    const { dashboard = [] } = response.data || {};
+    cachedDashboard = dashboard;
+    lastFetchError = null;
+    console.log("Dashboard updated. Rows:", dashboard.length);
+  } catch (err) {
+    console.error("Failed to fetch dashboard:", err.message);
+    lastFetchError = err.message;
+  }
+}
+
+// Initial fetch when server starts
+fetchDashboardData();
+
+// Schedule fetch every 5 minutes (300000 ms)
+setInterval(fetchDashboardData, 300000);
+
 // Login page
 app.get("/", (req, res) => {
   if (req.session.loggedIn) return res.redirect("/dashboard");
@@ -37,21 +61,14 @@ app.post("/login", (req, res) => {
 });
 
 // Dashboard page
-app.get("/dashboard", async (req, res) => {
+app.get("/dashboard", (req, res) => {
   if (!req.session.loggedIn) return res.redirect("/");
 
-  try {
-    // Replace this URL with your Apps Script web app URL
-    const response = await axios.get("YOUR_GAS_WEB_APP_URL");
-
-    // Default to empty arrays if undefined
-    const { updates = [], dashboard = [] } = response.data || {};
-
-    res.render("dashboard", { updates, dashboard, error: null });
-  } catch (err) {
-    console.error("Failed to fetch data:", err.message);
-    res.render("dashboard", { updates: [], dashboard: [], error: "Failed to fetch data" });
-  }
+  // Serve cached dashboard data
+  res.render("dashboard", {
+    dashboard: cachedDashboard || [],
+    error: lastFetchError
+  });
 });
 
 // Logout
