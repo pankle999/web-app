@@ -10,6 +10,7 @@ const PORT = process.env.PORT || 3000;
 const USERNAME = "Pankle999";
 const PASSWORD = "Pankle123";
 
+// Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.set("view engine", "ejs");
@@ -18,14 +19,6 @@ app.use(session({
   resave: false,
   saveUninitialized: false
 }));
-
-try {
-    const response = await axios.get("https://script.google.com/macros/s/AKfycby4iPMRqXPM2gjbfTCjCs59FjZZNlGRemi61_-1HcO1X-x05qIaeU4PS0urERjQRNDv/exec");
-    console.log(response.data);
-} catch (err) {
-    console.error("Failed to fetch data:", err.message);
-}
-
 
 // Login page
 app.get("/", (req, res) => {
@@ -48,19 +41,24 @@ app.get("/dashboard", async (req, res) => {
   if (!req.session.loggedIn) return res.redirect("/");
 
   try {
-    const response = await axios.get("https://script.google.com/macros/s/AKfycby4iPMRqXPM2gjbfTCjCs59FjZZNlGRemi61_-1HcO1X-x05qIaeU4PS0urERjQRNDv/exec");
-    const { updates, dashboard } = response.data || { updates: [], dashboard: [] };
+    // Replace this URL with your Apps Script web app URL
+    const response = await axios.get("YOUR_GAS_WEB_APP_URL");
 
-    res.render("dashboard", { updates, dashboard });
+    // Default to empty arrays if undefined
+    const { updates = [], dashboard = [] } = response.data || {};
+
+    res.render("dashboard", { updates, dashboard, error: null });
   } catch (err) {
-    console.error(err);
+    console.error("Failed to fetch data:", err.message);
     res.render("dashboard", { updates: [], dashboard: [], error: "Failed to fetch data" });
   }
 });
 
+// Logout
 app.get("/logout", (req, res) => {
   req.session.destroy();
   res.redirect("/");
 });
 
+// Start server
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
