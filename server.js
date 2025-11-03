@@ -42,7 +42,7 @@ app.get("/dashboard", async (req, res) => {
   if (!req.session.loggedIn) return res.redirect("/");
 
   try {
-    // Call your Google Apps Script as a web app
+    // Replace this URL with your Google Apps Script web app URL
     const response = await axios.get("YOUR_GAS_WEB_APP_URL"); 
     const updates = response.data.updates || [];
 
